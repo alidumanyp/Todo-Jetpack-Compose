@@ -8,12 +8,14 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.aliduman.apptodo.navigation.destinations.listComposable
 import com.aliduman.apptodo.navigation.destinations.taskComposable
+import com.aliduman.apptodo.ui.viewmodels.SharedViewModel
 import com.aliduman.apptodo.util.Constants.LIST_SCREEN
 
 @SuppressLint("RememberReturnType")
 @Composable
 fun SetupNavigation(
-    navController: NavHostController
+    navController: NavHostController,
+    sharedViewModel: SharedViewModel
 ) {
     val screen = remember(navController) {
         Screens(navController = navController)
@@ -21,7 +23,8 @@ fun SetupNavigation(
 
     NavHost(navController = navController, startDestination = LIST_SCREEN) {
         listComposable(
-            navigateToTaskScreen = screen.task
+            navigateToTaskScreen = screen.task,
+            sharedViewModel = sharedViewModel
         )
         taskComposable(
             navigateToListScreen = screen.list

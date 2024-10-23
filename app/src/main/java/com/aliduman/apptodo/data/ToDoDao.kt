@@ -42,5 +42,4 @@ interface ToDoDao {
     fun sortByHighPriority(): Flow<List<ToDoTask>>
 
 
-
 }
