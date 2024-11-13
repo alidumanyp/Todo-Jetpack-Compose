@@ -12,7 +12,9 @@ class ToDoRepository @Inject constructor(
 ) {
 
     val getAllTasks: Flow<List<ToDoTask>> = toDoDao.getAllTasks()
+
     val sortByLowPriority: Flow<List<ToDoTask>> = toDoDao.sortByLowPriority()
+
     val highByLowPriority: Flow<List<ToDoTask>> = toDoDao.sortByHighPriority()
 
     fun getSelectedTask(taskId: Int): Flow<ToDoTask> {
@@ -38,9 +40,6 @@ class ToDoRepository @Inject constructor(
     fun searchDatabase(searchQuery: String): Flow<List<ToDoTask>> {
         return toDoDao.searchDatabase(searchQuery = searchQuery)
     }
-
-
-
 
 
 }

@@ -55,22 +55,3 @@ fun ListScreen(
         }
     )
 }
-
-@Composable
-fun ListFab(
-    onFabClicked: (taskId: Int) -> Unit
-) {
-    FloatingActionButton(
-        containerColor = MaterialTheme.colorScheme.primary,
-        contentColor = MaterialTheme.colorScheme.onPrimary,
-        shape = MaterialTheme.shapes.medium,
-        onClick = {
-            onFabClicked(-1)
-        },
-    ) {
-        Icon(
-            imageVector = Icons.Filled.Add,
-            contentDescription = stringResource(id = R.string.add_button),
-        )
-    }
-}

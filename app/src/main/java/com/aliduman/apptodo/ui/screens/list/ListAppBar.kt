@@ -188,7 +188,7 @@ fun SearchAppBar(
     onSearchClicked: (String) -> Unit
 ) {
 
-    var trailingIconState by remember  { mutableStateOf(TrailingIconState.READY_TO_DELETE) }
+    var trailingIconState by remember { mutableStateOf(TrailingIconState.READY_TO_DELETE) }
 
     TopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
@@ -226,7 +226,7 @@ fun SearchAppBar(
                 trailingIcon = {
                     IconButton(
                         onClick = {
-                            when(trailingIconState){
+                            when (trailingIconState) {
                                 TrailingIconState.READY_TO_DELETE -> {
                                     if (text.isNotEmpty()) {
                                         onTextChange("")
@@ -236,6 +236,7 @@ fun SearchAppBar(
                                     }
 
                                 }
+
                                 TrailingIconState.READY_TO_CLOSE -> {
                                     if (text.isNotEmpty()) {
                                         onTextChange("")
