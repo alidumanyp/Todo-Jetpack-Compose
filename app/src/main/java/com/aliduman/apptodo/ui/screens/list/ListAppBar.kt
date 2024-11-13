@@ -36,6 +36,7 @@ import com.aliduman.apptodo.components.PriorityItem
 import com.aliduman.apptodo.data.models.Priority
 import com.aliduman.apptodo.ui.theme.LARGE_PADDING
 import com.aliduman.apptodo.ui.viewmodels.SharedViewModel
+import com.aliduman.apptodo.util.Action
 import com.aliduman.apptodo.util.SearchAppBarState
 import com.aliduman.apptodo.util.TrailingIconState
 
@@ -52,7 +53,9 @@ fun ListAppBar(
                     sharedViewModel.searchAppBarState.value = SearchAppBarState.OPENED
                 },
                 onSortClicked = {},
-                onDeleteAllConfirmed = {}
+                onDeleteAllConfirmed = {
+                    sharedViewModel.action.value = Action.DELETE_ALL
+                }
             )
         }
 
@@ -67,7 +70,7 @@ fun ListAppBar(
                     sharedViewModel.searchTextState.value = ""
                 },
                 onSearchClicked = {
-                    Log.d("Search", it)
+                    sharedViewModel.searchDatabase(searchQuery = it)
                 }
             )
         }

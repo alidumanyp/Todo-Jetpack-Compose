@@ -27,8 +27,11 @@ fun NavGraphBuilder.taskComposable(
         sharedViewModel.getSelectedTask(taskId = taskId) // get task from db by id and update selectedTask
         val selectedTask by sharedViewModel.selectedTask.collectAsState() // observe selectedTask changes and update selectedTask value when it changes in db
 
-        LaunchedEffect(key1 = taskId) {
-            sharedViewModel.updateTaskFields(selectedTask = selectedTask)
+        LaunchedEffect(key1 = selectedTask) {
+            if (selectedTask != null || taskId == -1) { // if selectedTask is not null or taskId is -1 then navigate to list screen with no action and update task fields with selectedTask
+                sharedViewModel.updateTaskFields(selectedTask = selectedTask)
+            }
+
         }
 
         TaskScreen(
