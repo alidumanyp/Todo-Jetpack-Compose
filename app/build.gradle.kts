@@ -86,6 +86,8 @@ dependencies {
 
     // compose navigation
     implementation(libs.androidx.navigation.compose)
+
+    implementation(libs.androidx.datastore.preferences)
 }
 
 kapt {

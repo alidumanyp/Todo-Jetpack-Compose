@@ -1,7 +1,6 @@
 package com.aliduman.apptodo.ui.screens.list
 
 import android.annotation.SuppressLint
-import android.util.Log
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -25,16 +24,21 @@ fun ListScreen(
     sharedViewModel: SharedViewModel
 ) {
     LaunchedEffect(key1 = true) {
-        Log.d("ListScreen", "LaunchedEffect called")
         sharedViewModel.getAllTasks() // get all tasks from database when the screen is loaded
         // this will be called only once when the screen is loaded.
         // and will not be called again when the screen is rotated or navigated.
+        sharedViewModel.readSortState()
     }
 
     val action by sharedViewModel.action
 
     val allTasks by sharedViewModel.allTasks.collectAsState() // collectAsState() converts flow to state so we can use it in compose
     val searchedTasks by sharedViewModel.searchedTasks.collectAsState()
+
+    val sortState by sharedViewModel.sortState.collectAsState()
+    val lowPriorityTasks by sharedViewModel.lowPriorityTasks.collectAsState()
+    val highPriorityTasks by sharedViewModel.highPriorityTasks.collectAsState()
+
     val searchAppBarState: SearchAppBarState by sharedViewModel.searchAppBarState
     val searchTextState: String by sharedViewModel.searchTextState
 
@@ -67,7 +71,16 @@ fun ListScreen(
                 navigateToTaskScreen = navigateToTaskScreen,
                 paddingValues = paddingValues,
                 searchedTasks = searchedTasks,
-                searchAppBarState = searchAppBarState
+                searchAppBarState = searchAppBarState,
+                sortState = sortState,
+                lowPriorityTasks = lowPriorityTasks,
+                highPriorityTasks = highPriorityTasks,
+                onSwipeToDelete = { action, task ->
+                    sharedViewModel.action.value = action // set action to delete
+                    sharedViewModel.updateTaskFields(selectedTask = task) // update task fields with selected task
+                    snackbarHostState.currentSnackbarData?.dismiss() //
+                }
+
             )
         },
         floatingActionButton = {

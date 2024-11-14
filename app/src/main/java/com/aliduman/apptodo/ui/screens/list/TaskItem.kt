@@ -15,11 +15,11 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.text.style.TextOverflow
 import com.aliduman.apptodo.data.models.ToDoTask
 import com.aliduman.apptodo.ui.theme.LARGE_PADDING
 import com.aliduman.apptodo.ui.theme.PRIORITY_INDICATOR_SIZE
-import com.aliduman.apptodo.ui.theme.SMALL_PADDING
 import com.aliduman.apptodo.ui.theme.TASK_ITEM_ELEVATION
 
 @Composable
@@ -29,16 +29,14 @@ fun TaskItem(
 ) {
     Card(
         modifier = Modifier
-            .padding(all = SMALL_PADDING)
             .fillMaxWidth()
             .clickable {
                 navigateToTaskScreen(toDoTask.id)
             },
-        shape = MaterialTheme.shapes.medium,
+        shape = RectangleShape,
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surface,
         ),
-        border = CardDefaults.outlinedCardBorder(),
         elevation = CardDefaults.cardElevation(
             defaultElevation = TASK_ITEM_ELEVATION
         )

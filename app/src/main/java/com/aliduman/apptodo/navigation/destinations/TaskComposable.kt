@@ -24,7 +24,11 @@ fun NavGraphBuilder.taskComposable(
         })
     ) { navBackStackEntry ->
         val taskId = navBackStackEntry.arguments?.getInt(TASK_ARGUMENT_KEY) ?: -1
-        sharedViewModel.getSelectedTask(taskId = taskId) // get task from db by id and update selectedTask
+
+        LaunchedEffect(key1 = taskId) { // if taskId changes then get task from db and update selectedTask
+            sharedViewModel.getSelectedTask(taskId = taskId)
+        }
+
         val selectedTask by sharedViewModel.selectedTask.collectAsState() // observe selectedTask changes and update selectedTask value when it changes in db
 
         LaunchedEffect(key1 = selectedTask) {

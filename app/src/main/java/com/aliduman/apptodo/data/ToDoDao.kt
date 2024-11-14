@@ -35,11 +35,10 @@ interface ToDoDao {
     @Query("SELECT * FROM todo_table WHERE title LIKE :searchQuery OR description LIKE :searchQuery")
     fun searchDatabase(searchQuery: String): Flow<List<ToDoTask>>
 
-    @Query("SELECT * FROM todo_table ORDER BY CASE priority WHEN 'L%' THEN 1 WHEN 'M%' THEN 2 WHEN 'H%' THEN 3 END")
+    @Query("SELECT * FROM todo_table ORDER BY CASE priority WHEN 'LOW' THEN 1 WHEN 'MEDIUM' THEN 2 WHEN 'HIGH' THEN 3 END")
     fun sortByLowPriority(): Flow<List<ToDoTask>>
 
-    @Query("SELECT * FROM todo_table ORDER BY CASE priority WHEN 'H%' THEN 1 WHEN 'M%' THEN 2 WHEN 'L%' THEN 3 END")
+    @Query("SELECT * FROM todo_table ORDER BY CASE priority WHEN 'HIGH' THEN 1 WHEN 'MEDIUM' THEN 2 WHEN 'LOW' THEN 3 END")
     fun sortByHighPriority(): Flow<List<ToDoTask>>
-
 
 }

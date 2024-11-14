@@ -32,6 +32,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.input.ImeAction
 import com.aliduman.apptodo.R
+import com.aliduman.apptodo.components.DisplayAlertDialog
 import com.aliduman.apptodo.components.PriorityItem
 import com.aliduman.apptodo.data.models.Priority
 import com.aliduman.apptodo.ui.theme.LARGE_PADDING
@@ -52,7 +53,9 @@ fun ListAppBar(
                 onSearchClicked = {
                     sharedViewModel.searchAppBarState.value = SearchAppBarState.OPENED
                 },
-                onSortClicked = {},
+                onSortClicked = {
+                    sharedViewModel.persistSortState(it)
+                },
                 onDeleteAllConfirmed = {
                     sharedViewModel.action.value = Action.DELETE_ALL
                 }
@@ -105,9 +108,23 @@ fun ListAppBarActions(
     onSortClicked: (Priority) -> Unit,
     onDeleteAllConfirmed: () -> Unit
 ) {
+    var openDialog by remember { mutableStateOf(false) }
+
+    DisplayAlertDialog(
+        title = "Remove All Tasks?",
+        message = "Are you sure you want to remove all tasks?",
+        openDialog = openDialog,
+        closeDialog = { openDialog = false },
+        onYesClicked = {
+            onDeleteAllConfirmed()
+        }
+    )
+
     SearchAction(onSearchClicked = onSearchClicked)
     SortAction(onSortClicked = onSortClicked)
-    DeleteAllAction(onDeleteAllConfirmed = onDeleteAllConfirmed)
+    DeleteAllAction(onDeleteAllConfirmed = {
+        openDialog = true
+    })
 }
 
 @Composable
@@ -142,7 +159,6 @@ fun SortAction(
             }, onClick = {
                 expanded = false
                 onSortClicked(priority)
-                Log.d("Priority", priority.name)
             }
             )
         }
